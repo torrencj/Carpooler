@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Carpooler</title>
+  </head>
+  <body>
+    <style media="screen">
+      html, body, #map_canvas { margin: 0; padding: 0; height: 100% }
+    </style>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <div id="map_canvas"></div>
+    <script type="text/javascript">
+var lot40 = new google.maps.LatLng(30.2867008,-97.7297249);
+var bastrop = new google.maps.LatLng(30.1131036,-97.3563104);
+var manch = new google.maps.LatLng(30.2382196,-97.7866965);
+
+var map;
+var mapOptions = { center: new google.maps.LatLng(42.5584308, -70.8597732), zoom: 3,
+mapTypeId: google.maps.MapTypeId.ROADMAP };
+
+function initialize() {
+map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+directionsService = new google.maps.DirectionsService();
+directionsDisplay = new google.maps.DirectionsRenderer({
+  suppressMarkers: false,
+  suppressInfoWindows: true
+});
+directionsDisplay.setMap(map);
+
+var request = {
+  origin: bastrop,
+  destination: lot40,
+  travelMode: google.maps.DirectionsTravelMode.DRIVING
+};
+directionsService.route(request, function(response, status) {
+  if (status == google.maps.DirectionsStatus.OK) {
+    directionsDisplay.setDirections(response);
+  }
+});
+
+//directionsService = new google.maps.DirectionsService();
+directionsDisplay2 = new google.maps.DirectionsRenderer({
+  suppressMarkers: false,
+  suppressInfoWindows: true
+});
+directionsDisplay2.setMap(map);
+
+var request = {
+  origin: manch,
+  destination: lot40,
+  travelMode: google.maps.DirectionsTravelMode.DRIVING
+};
+directionsService.route(request, function(response, status) {
+  if (status == google.maps.DirectionsStatus.OK) {
+    directionsDisplay2.setDirections(response);
+  }
+});
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </body>
+</html>
